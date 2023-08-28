@@ -1,2 +1,2 @@
-# JSON Parser
+# ShareX Imgur Deletion URL Script
 Simple JSON parser that uses selenium (a web driver that automates browser interactions) to open Imgur URLs and automates their deletion
