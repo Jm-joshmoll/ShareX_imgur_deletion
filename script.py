@@ -1,10 +1,28 @@
+"""
+Script to Open and Delete Files Using Selenium
+
+This script reads entries from a JSON file named 'History.json', extracts the 'DeletionURL'
+from each entry, opens the URL using Selenium WebDriver, and clicks the 'Yes' button to
+confirm the deletion.
+
+Make sure to install the required dependencies before running the script:
+- Selenium: pip install selenium
+
+Note:
+- This script assumes you have a WebDriver (e.g., ChromeDriver) properly installed and configured.
+- Be cautious when automating deletion actions as they cannot be undone.
+
+Usage:
+1. Fill in the 'history_file_path' variable with the path to your 'History.json' file.
+2. Run the script using: python script.py
+"""
+
 import re
 import json
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
-
 
 # Path to ShareX's History.json file
 history_file_path = "../Documents/ShareX/History.json"  # Replace with the correct path
@@ -42,7 +60,7 @@ for match in matches:
             except TimeoutException:
                 print("Timeout while waiting for the 'Yes' button to appear.")
 
-            # Optional: Wait for a short time before opening the next link
+            # Wait for a short time before opening the next link
             time.sleep(2)
 
             # Unsure on imgur's limit
@@ -51,11 +69,12 @@ for match in matches:
 
             # Remove the processed entry from the JSON content
             json_content = json_content.replace(match, "")
+            print(f"Deleted: {deletion_url}")
 
         count = count + 1
 
     except json.JSONDecodeError:
-        print("Failed to parse JSON:", match)
+        print("Failed to parse JSON:", match)  # Ignore lines that aren't valid JSON objects
 else:
     print("No entries with DeletionURL found.")
 
