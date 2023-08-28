@@ -1,9 +1,9 @@
 """
 Script to Open and Delete Files Using Selenium
 
-This script reads entries from the shareX JSON file named 'History.json', transforms the content 
-into valid JSON format, extracts the 'DeletionURL' from each entry, opens the URL using Selenium
-WebDriver, and clicks the 'Yes' button to confirm the deletion.
+This script reads entries from a JSON file named 'History.json' with unconventional format,
+transforms the content into valid JSON format, extracts the 'DeletionURL' from each entry,
+opens the URL using Selenium WebDriver, and clicks the 'Yes' button to confirm the deletion.
 
 Make sure to install the required dependencies before running the script:
 - Selenium: pip install selenium
@@ -24,8 +24,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 # Path to ShareX's History.json file
-history_file_path = "path/to/History.json"  # Replace with the correct path
-count = 0
+history_file_path = "path/to/ShareX/History.json"  # Replace with the correct path
 
 # Initialize the Selenium web driver
 driver = webdriver.Chrome()  # Make sure to have Chrome driver installed
@@ -63,16 +62,10 @@ for line in preprocessed_lines:
             # Wait for a short time before opening the next link
             time.sleep(5)
 
-            # Limit the deletion process to not get rate limited
-            if count == 500:
-                break
-
-            count = count + 1
-
     except (ValueError, SyntaxError):
         print("Failed to parse line:", line)  # Ignore lines that aren't valid literal objects
 
 # Close the web driver
 driver.quit()
 
-print("Deletion process completed.")
+print(f"Deletion process completed.")
